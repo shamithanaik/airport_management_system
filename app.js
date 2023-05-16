@@ -49,10 +49,24 @@ app.post("/admin/login",function(req,res){
             res.send(message);
         } else{
             message = "Successful login!"
-            res.send(message);
+            res.sendFile(__dirname+'/public/query.html');
         }
     });
     
+});
+
+app.post("/admin/query",function(req,res){
+    var text = req.body.textarea;
+    console.log(text);
+    connection.query(text,(err,result) => {
+        if(!err){
+            for(var i = 0;i<result.length;i++){
+                console.log(result[i]);
+            }
+        } 
+        else console.log(err);
+    });
+    res.sendFile(__dirname+'/public/query.html');
 });
 
 
